@@ -48,6 +48,9 @@ td {
 .square {
   padding:75px;
 }
+.used {
+  padding:75px;
+}
 #Turn {
   text-align: center;
   padding: 20px;

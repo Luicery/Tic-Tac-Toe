@@ -1,14 +1,13 @@
 $(document).ready(function() {
   let currentPlayer = "X";
-  let squareAmount = 9;
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
-  let currentSquare = 0
   let boardClear = function() {
-    for (i = 1; i <= squareAmount; i++) {
+    for (i = 1; i <= 9; i++) {
       $("#"+i).attr("src","");
       $("#"+i).attr("width", 0);
       $("#"+i).attr("height", 0);
+      $("#"+i).removeClass("used")
       $("#"+i).css({
         "padding":"75px"
       });
@@ -38,22 +37,59 @@ $(document).ready(function() {
       boardClear();
     };
   };
+  $(".square").on({
+    mouseenter: function() {
+      if($("#" + this.id).hasClass("used") === false) {
+        if(currentPlayer === "X") {
+          $("#" + this.id).attr("src", "LetterX.png");
+          $("#" + this.id).attr("width", 150);
+          $("#" + this.id).attr("height", 150);
+          $("#" + this.id).css({
+            "padding":"0px",
+            "opacity":"0.3"
+          });
+        } else if(currentPlayer === "O") {
+          $("#" + this.id).attr("src", "Circle.png");
+          $("#" + this.id).attr("width", 150);
+          $("#" + this.id).attr("height", 150);
+          $("#" + this.id).css({
+            "padding":"0px",
+            "opacity":"0.3"
+          })
+        }
+      }
+    },
+    mouseleave: function() {
+      if($("#" + this.id).hasClass("used") === false) {
+        $("#"+ this.id).attr("src","");
+        $("#"+ this.id).attr("width", 0);
+        $("#"+ this.id).attr("height", 0);
+        $("#"+ this.id).css({
+          "padding":"75px",
+        });
+      }
+    }
+  })
   $(".square").on("click", function() {
-    if($("#" + this.id).attr("src") === "") {
+    if($("#" + this.id).hasClass("used") === false) {
       if(currentPlayer === "X") {
+        $("#" + this.id).addClass("used")
         $("#" + this.id).attr("src", "LetterX.png");
         $("#" + this.id).attr("width", 150);
         $("#" + this.id).attr("height", 150);
         $("#" + this.id).css({
-          "padding":"0px"
+          "padding":"0px",
+          "opacity":"1"
         });
         currentPlayer = "O";
       } else {
+        $("#" + this.id).addClass("used")
         $("#" + this.id).attr("src", "Circle.png");
         $("#" + this.id).attr("width", 150);
         $("#" + this.id).attr("height", 150);
         $("#" + this.id).css({
-          "padding":"0px"
+          "padding":"0px",
+          "opacity":"1"
         })
         currentPlayer = "X";
       };
