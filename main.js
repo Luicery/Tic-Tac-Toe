@@ -2,6 +2,10 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
+  // let Player1 = prompt("Enter Player 1 name team X", "Player1");
+  // let Player2 = prompt("Enter Player 2 name team O", "Player2");
+  $("#Player1").text(Player1);
+  $("#Player2").text(Player2);
   let boardClear = function() {
     for (i = 1; i <= 9; i++) {
       $("#"+i).attr("src","");
@@ -16,9 +20,9 @@ $(document).ready(function() {
   };
   let changeTurns = function() {
     if(currentPlayer === "X") {
-      $("#Turn").text("It is Player 1's turn");
+      $("#Turn").text(`It is ${Player1}'s turn`);
     } else {
-      $("#Turn").text("It is Player 2's turn");
+      $("#Turn").text(`It is ${Player2}'s turn`);
     };
   };
   let checkWinner = function() {
