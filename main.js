@@ -2,10 +2,16 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
+  let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  let MovesLeft = 45;
+  let loss = -Infinity;
+  let win = 10;
+  let draw = 0;
   // let Player1 = prompt("Enter Player 1 name team X", "Player1");
   // let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
   $("#Player2").text(Player2);
+  $("#Turn").text(`It is ${Player1}'s turn'`)
   let boardClear = function() {
     for (i = 1; i <= 9; i++) {
       $("#"+i).attr("src","");
@@ -30,17 +36,21 @@ $(document).ready(function() {
       console.log("Player 1 wins");
       Player1ScoreAmount = Player1ScoreAmount + 1;
       $("#Player1Score").text(Player1ScoreAmount);
-      boardClear();
     } else if(($("#1").attr("src") === "Circle.png" && $("#2").attr("src") === "Circle.png" && $("#3").attr("src") === "Circle.png") || ($("#4").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png") || ($("#7").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#4").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png") || ($("#2").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png")) {
       console.log("Player 2 wins");
       Player2ScoreAmount = Player2ScoreAmount + 1;
       $("#Player2Score").text(Player2ScoreAmount);
-      boardClear();
     } else if ($("#1").attr("src") !== "" && $("#2").attr("src") !== "" && $("#3").attr("src") !== "" && $("#4").attr("src") !== "" && $("#5").attr("src") !== "" && $("#6").attr("src") !== "" && $("#7").attr("src") !== "" && $("#8").attr("src") !== "" && $("#9").attr("src") !== "") {
       console.log("Draw");
-      boardClear();
     };
   };
+  let Minimax = function() {
+    for(i = 1; i <= currentState.length; i++) {
+      checkWinner();
+
+      }
+
+    }
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
@@ -78,6 +88,8 @@ $(document).ready(function() {
     if($("#" + this.id).hasClass("used") === false) {
       if(currentPlayer === "X") {
         $("#" + this.id).addClass("used")
+        let Index = currentState.indexOf("" + this.id)
+        currentState[Index] = "X";
         $("#" + this.id).attr("src", "LetterX.png");
         $("#" + this.id).attr("width", 150);
         $("#" + this.id).attr("height", 150);
@@ -87,6 +99,8 @@ $(document).ready(function() {
         });
         currentPlayer = "O";
       } else {
+        let Index = currentState.indexOf("" + this.id)
+        currentState[Index] = "O";
         $("#" + this.id).addClass("used")
         $("#" + this.id).attr("src", "Circle.png");
         $("#" + this.id).attr("width", 150);
@@ -97,8 +111,8 @@ $(document).ready(function() {
         })
         currentPlayer = "X";
       };
+      checkWinner();
+      changeTurns();
     };
-    checkWinner();
-    changeTurns();
   });
 });
