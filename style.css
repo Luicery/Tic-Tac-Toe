@@ -6,7 +6,7 @@ nav {
   background-color: lightblue;
   color: white;
   text-align: center;
-  padding: 10px;
+  padding: 0px;
   font-size: 50px;
   font-family:"Lilita One", sans-serif;
 }
@@ -38,7 +38,7 @@ nav {
 #board {
   position: absolute;
   left:32.5%;
-  top: 15%;
+  top: 20%;
   border-spacing: 0;
 }
 td {
@@ -47,4 +47,8 @@ td {
 }
 .square {
   padding:75px;
+}
+#Turn {
+  text-align: center;
+  padding: 20px;
 }
