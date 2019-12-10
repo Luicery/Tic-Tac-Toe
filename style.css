@@ -1,0 +1,48 @@
+* {
+  margin: auto;
+  padding: auto;
+}
+nav {
+  background-color: lightblue;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 50px;
+  font-family:"Lilita One", sans-serif;
+}
+#Player1 {
+  position: absolute;
+  left: 15%;
+  top: 25%;
+}
+#Player2 {
+  position: absolute;
+  right: 15%;
+  top: 25%;
+}
+.Players {
+  font-size: 30px;
+  font-family:"Lilita One", sans-serif;
+  color:red;
+}
+#Player1Score {
+  position: absolute;
+  left: 17.5%;
+  top: 32.5%;
+}
+#Player2Score {
+  position: absolute;
+  right: 17.5%;
+  top: 32.5%;
+}
+#board {
+  position: absolute;
+  left:32.5%;
+  top: 20%;
+  border-spacing: 0;
+}
+.square {
+  margin: 0;
+  padding:75px;
+  border: 3px solid black;
+}
