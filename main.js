@@ -2,7 +2,7 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
-  let human = "X" //reminder
+  let Human = "X" //reminder
   let Robot = "O" //reminder
   let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
   let avaliableSpots = []
@@ -52,26 +52,48 @@ $(document).ready(function() {
       return 0
     };
   };
-  let Minimax = function(newBoard) {
-    let bestMove = -10
-    let currentScore = 0
+  let Minimax = function(newBoard, player) {
     for(i = 0; i < currentState.length; i++) {
       if (currentState[i] !== "O" && currentState[i] !== "X") {
         IndexOfSpot = currentState.indexOf(currentState[i])
         avaliableSpots.push(IndexOfSpot)
       }
     }
-    let move = function() {
-      for(i = 0; i < avaliableSpots.length; i++) {
-        currentState[avaliableSpots[i]] = "O"
-        let currentScore = checkWinnerAI();
-        currentState[avaliableSpots[i]] = avaliableSpots[i]
-        if (currentScore > bestMove) {
-          bestMove = Score
+    checkWinnerAI();
+    let moves = []
+    for (i = 0; i < avaliableSpots.length; i++) {
+      let move = {}
+      move.index = newBoard[avaliableSpots[i]]
+      newBoard[avaliableSpots[i]] = player
+      if(player == Robot) {
+        let result = Minimax(newBoard, Human)
+      } else if (player == Human) {
+        let result = Minimax(newBoard, Robot)
+      }
+      newBoard[avaliableSpots[i]] = move.index;
+      moves.push(move)
+    }
+    let bestMove
+    if(player == Robot) {
+      let bestScore = -100
+      for (x = 0; x < moves.length; x++) {
+        if(moves[x].score > bestScore) {
+          bestScore = moves[x].score
+          bestMove = x
+        }
+      }
+    } else if (player == Human) {
+      let bestScore = 100
+      for (x = 0; x < moves.length; x++) {
+        if(moves[x].score < bestScore) {
+          bestScore = moves[x].score
+          bestMove = x
         }
       }
     }
+    return moves[bestMove]
   }
+  console.log(Minimax(currentState))
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
