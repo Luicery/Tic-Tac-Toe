@@ -2,11 +2,10 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
+  let human = "X" //reminder
+  let Robot = "O" //reminder
   let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  let MovesLeft = 45;
-  let loss = -Infinity;
-  let win = 10;
-  let draw = 0;
+  let avaliableSpots = []
   // let Player1 = prompt("Enter Player 1 name team X", "Player1");
   // let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
@@ -32,11 +31,11 @@ $(document).ready(function() {
     };
   };
   let checkWinner = function() {
-    if(($("#1").attr("src") === "LetterX.png" && $("#2").attr("src") === "LetterX.png" && $("#3").attr("src") === "LetterX.png") || ($("#4").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png") || ($("#7").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#4").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png") || ($("#2").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png")) {
+    if((currentState[0] === "X" && currentState[1] === "X" && currentState[2] === "X") || (currentState[3] === "X" && currentState[4] === "X" && currentState[5] === "X") || (currentState[6] === "X" && currentState[7] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[3] === "X" && currentState[6] === "X") || (currentState[1] === "X" && currentState[4] === "X" && currentState[7] === "X") || (currentState[2] === "X" && currentState[5] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[4] === "X" && currentState[8] === "X")|| (currentState[2] === "X" && currentState[4] === "X" && currentState[6] === "X")) {
       console.log("Player 1 wins");
       Player1ScoreAmount = Player1ScoreAmount + 1;
       $("#Player1Score").text(Player1ScoreAmount);
-    } else if(($("#1").attr("src") === "Circle.png" && $("#2").attr("src") === "Circle.png" && $("#3").attr("src") === "Circle.png") || ($("#4").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png") || ($("#7").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#4").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png") || ($("#2").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png")) {
+    } else if ((currentState[0] === "O" && currentState[1] === "O" && currentState[2] === "O") || (currentState[3] === "O" && currentState[4] === "O" && currentState[5] === "O") || (currentState[6] === "O" && currentState[7] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[3] === "O" && currentState[6] === "O") || (currentState[1] === "O" && currentState[4] === "O" && currentState[7] === "O") || (currentState[2] === "O" && currentState[5] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[4] === "O" && currentState[8] === "O")|| (currentState[2] === "O" && currentState[4] === "O" && currentState[6] === "O")) {
       console.log("Player 2 wins");
       Player2ScoreAmount = Player2ScoreAmount + 1;
       $("#Player2Score").text(Player2ScoreAmount);
@@ -44,13 +43,35 @@ $(document).ready(function() {
       console.log("Draw");
     };
   };
-  let Minimax = function() {
-    for(i = 1; i <= currentState.length; i++) {
-      checkWinner();
-
+  let checkWinnerAI = function() {
+    if((currentState[0] === "X" && currentState[1] === "X" && currentState[2] === "X") || (currentState[3] === "X" && currentState[4] === "X" && currentState[5] === "X") || (currentState[6] === "X" && currentState[7] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[3] === "X" && currentState[6] === "X") || (currentState[1] === "X" && currentState[4] === "X" && currentState[7] === "X") || (currentState[2] === "X" && currentState[5] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[4] === "X" && currentState[8] === "X")|| (currentState[2] === "X" && currentState[4] === "X" && currentState[6] === "X")) {
+      return -10
+    } else if ((currentState[0] === "O" && currentState[1] === "O" && currentState[2] === "O") || (currentState[3] === "O" && currentState[4] === "O" && currentState[5] === "O") || (currentState[6] === "O" && currentState[7] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[3] === "O" && currentState[6] === "O") || (currentState[1] === "O" && currentState[4] === "O" && currentState[7] === "O") || (currentState[2] === "O" && currentState[5] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[4] === "O" && currentState[8] === "O")|| (currentState[2] === "O" && currentState[4] === "O" && currentState[6] === "O")) {
+      return 10
+    } else if ($("#1").attr("src") !== "" && $("#2").attr("src") !== "" && $("#3").attr("src") !== "" && $("#4").attr("src") !== "" && $("#5").attr("src") !== "" && $("#6").attr("src") !== "" && $("#7").attr("src") !== "" && $("#8").attr("src") !== "" && $("#9").attr("src") !== "") {
+      return 0
+    };
+  };
+  let Minimax = function(newBoard) {
+    let bestMove = -10
+    let currentScore = 0
+    for(i = 0; i < currentState.length; i++) {
+      if (currentState[i] !== "O" && currentState[i] !== "X") {
+        IndexOfSpot = currentState.indexOf(currentState[i])
+        avaliableSpots.push(IndexOfSpot)
       }
-
     }
+    let move = function() {
+      for(i = 0; i < avaliableSpots.length; i++) {
+        currentState[avaliableSpots[i]] = "O"
+        let currentScore = checkWinnerAI();
+        currentState[avaliableSpots[i]] = avaliableSpots[i]
+        if (currentScore > bestMove) {
+          bestMove = Score
+        }
+      }
+    }
+  }
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
