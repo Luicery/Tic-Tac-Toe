@@ -53,28 +53,32 @@ $(document).ready(function() {
     };
   };
   let Minimax = function(newBoard, player) {
-    for(i = 0; i < currentState.length; i++) {
-      if (currentState[i] !== "O" && currentState[i] !== "X") {
-        IndexOfSpot = currentState.indexOf(currentState[i])
+    for(i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] !== "O" && newBoard[i] !== "X") {
+        IndexOfSpot = newBoard.indexOf(newBoard[i])
         avaliableSpots.push(IndexOfSpot)
       }
     }
+    // console.log(avaliableSpots)
     checkWinnerAI();
     let moves = []
     for (i = 0; i < avaliableSpots.length; i++) {
       let move = {}
       move.index = newBoard[avaliableSpots[i]]
-      newBoard[avaliableSpots[i]] = player
-      if(player == Robot) {
+      newBoard[avaliableSpots[i]] = currentPlayer
+
+      if(currentPlayer === Robot) {
         let result = Minimax(newBoard, Human)
-      } else if (player == Human) {
+        move.score = result
+      } else if (currentPlayer === Human) {
         let result = Minimax(newBoard, Robot)
+        move.score = result
       }
       newBoard[avaliableSpots[i]] = move.index;
       moves.push(move)
     }
     let bestMove
-    if(player == Robot) {
+    if(currentPlayer === Robot) {
       let bestScore = -100
       for (x = 0; x < moves.length; x++) {
         if(moves[x].score > bestScore) {
@@ -82,7 +86,7 @@ $(document).ready(function() {
           bestMove = x
         }
       }
-    } else if (player == Human) {
+    } else if (currentPlayer === Human) {
       let bestScore = 100
       for (x = 0; x < moves.length; x++) {
         if(moves[x].score < bestScore) {
@@ -93,7 +97,7 @@ $(document).ready(function() {
     }
     return moves[bestMove]
   }
-  console.log(Minimax(currentState))
+  // let bestSpot = Minimax(currentState, Robot)
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
