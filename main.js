@@ -3,8 +3,8 @@ $(document).ready(function() {
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
   let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  // let Player1 = prompt("Enter Player 1 name team X", "Player1");
-  // let Player2 = prompt("Enter Player 2 name team O", "Player2");
+  let Player1 = prompt("Enter Player 1 name team X", "Player1");
+  let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
   $("#Player2").text(Player2);
   $("#Turn").text(`It is ${Player1}'s turn'`)
