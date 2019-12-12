@@ -2,9 +2,11 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
+  let Robot = "X"
+  let Human = "O"
   let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  let Player1 = prompt("Enter Player 1 name team X", "Player1");
-  let Player2 = prompt("Enter Player 2 name team O", "Player2");
+  //let Player1 = prompt("Enter Player 1 name team X", "Player1");
+  //let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
   $("#Player2").text(Player2);
   $("#Turn").text(`It is ${Player1}'s turn'`)
@@ -43,6 +45,73 @@ $(document).ready(function() {
       boardClear();
     };
   };
+
+  let checkWinnerMinimax = function(board, player) {
+    if (
+      (board[0] === player && board[1] === player && board[2] === player) ||
+      (board[3] === player && board[4] === player && board[5] === player) ||
+      (board[6] === player && board[7] === player && board[8] === player) ||
+      (board[0] === player && board[3] === player && board[6] === player) ||
+      (board[1] === player && board[4] === player && board[7] === player) ||
+      (board[2] === player && board[5] === player && board[8] === player) ||
+      (board[0] === player && board[4] === player && board[8] === player) ||
+      (board[2] === player && board[4] === player && board[6] === player)
+    ) {
+      return true
+    } else if (board[0] !== "1" && board[1] !== "2" && board[2] !== "3" && board[3] !== "4" && board[4] !== "5" && board[5] !== "6" && board[6] !== "7" && board[7] !== "8" && board[8] !== "9") {
+      return "tie"
+    } else {
+      return false
+    }
+  }
+var origBoard = ["O","1" ,"X","X","4" ,"X", "6" ,"O","O"];
+let minimax = function(board, player) {
+  if (checkWinnerMinimax(board, player) === true) {
+    if (player === Robot) {
+      nextScore = 10
+      return nextScore
+    } else if (player === Human) {
+      nextScore = -10
+      return nextScore
+    }
+  } else if (checkWinnerMinimax(board, player) === "tie") {
+    nextScore = 0
+    return nextScore
+  }
+  if(player === Robot) {
+    let bestScore = -1000
+    for(i = 0; i < board.length; i++) {
+      if(board[i] !== "X" && board[i] !== "O") {
+        let origin = board[i]
+        board[i] = player
+        let nextScore = minimax(board, Human)
+        board[i] = origin
+        if (nextScore > bestScore) {
+          bestScore = nextScore
+        }
+      }
+    }
+    return bestScore
+  } else if (player === Human) {
+    let bestScore = 1000
+    // let emptySpots = avaliableSpots(board)
+    for(i = 0; i < board.length; i++) {
+      if(board[i] !== "X" && board[i] !== "O") {
+        let origin = board[i]
+        board[i] = player
+        let nextScore = minimax(board, Robot)
+        board[i] = origin
+        if (nextScore < bestScore) {
+          bestScore = nextScore
+        }
+      }
+    }
+    console.log(board)
+    return bestScore
+  }
+}
+var bestSpot = minimax(origBoard, "X");
+console.log(bestSpot)
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
