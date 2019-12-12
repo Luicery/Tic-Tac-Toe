@@ -2,10 +2,7 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
-  let Robot = "X" //reminder
-  let Human = "O" //reminder
-  let currentState = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
-  let avaliableSpots = []
+  let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
   // let Player1 = prompt("Enter Player 1 name team X", "Player1");
   // let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
@@ -31,96 +28,21 @@ $(document).ready(function() {
     };
   };
   let checkWinner = function() {
-    if((currentState[0] === "X" && currentState[1] === "X" && currentState[2] === "X") || (currentState[3] === "X" && currentState[4] === "X" && currentState[5] === "X") || (currentState[6] === "X" && currentState[7] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[3] === "X" && currentState[6] === "X") || (currentState[1] === "X" && currentState[4] === "X" && currentState[7] === "X") || (currentState[2] === "X" && currentState[5] === "X" && currentState[8] === "X") || (currentState[0] === "X" && currentState[4] === "X" && currentState[8] === "X")|| (currentState[2] === "X" && currentState[4] === "X" && currentState[6] === "X")) {
+    if(($("#1").attr("src") === "LetterX.png" && $("#2").attr("src") === "LetterX.png" && $("#3").attr("src") === "LetterX.png") || ($("#4").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png") || ($("#7").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#4").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png") || ($("#2").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png")) {
       console.log("Player 1 wins");
       Player1ScoreAmount = Player1ScoreAmount + 1;
       $("#Player1Score").text(Player1ScoreAmount);
-      //boardClear()
-    } else if ((currentState[0] === "O" && currentState[1] === "O" && currentState[2] === "O") || (currentState[3] === "O" && currentState[4] === "O" && currentState[5] === "O") || (currentState[6] === "O" && currentState[7] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[3] === "O" && currentState[6] === "O") || (currentState[1] === "O" && currentState[4] === "O" && currentState[7] === "O") || (currentState[2] === "O" && currentState[5] === "O" && currentState[8] === "O") || (currentState[0] === "O" && currentState[4] === "O" && currentState[8] === "O")|| (currentState[2] === "O" && currentState[4] === "O" && currentState[6] === "O")) {
+      boardClear();
+    } else if(($("#1").attr("src") === "Circle.png" && $("#2").attr("src") === "Circle.png" && $("#3").attr("src") === "Circle.png") || ($("#4").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png") || ($("#7").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#4").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png") || ($("#2").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png")) {
       console.log("Player 2 wins");
       Player2ScoreAmount = Player2ScoreAmount + 1;
       $("#Player2Score").text(Player2ScoreAmount);
-      //boardClear()
+      boardClear();
     } else if ($("#1").attr("src") !== "" && $("#2").attr("src") !== "" && $("#3").attr("src") !== "" && $("#4").attr("src") !== "" && $("#5").attr("src") !== "" && $("#6").attr("src") !== "" && $("#7").attr("src") !== "" && $("#8").attr("src") !== "" && $("#9").attr("src") !== "") {
       console.log("Draw");
-      //boardClear()
+      boardClear();
     };
   };
-
-  let checkWinnerAI = function(newBoard) {
-    if((newBoard[0] === "X" && newBoard[1] === "X" && newBoard[2] === "X") || (newBoard[3] === "X" && newBoard[4] === "X" && newBoard[5] === "X") || (newBoard[6] === "X" && newBoard[7] === "X" && newBoard[8] === "X") || (newBoard[0] === "X" && newBoard[3] === "X" && newBoard[6] === "X") || (newBoard[1] === "X" && newBoard[4] === "X" && newBoard[7] === "X") || (newBoard[2] === "X" && newBoard[5] === "X" && newBoard[8] === "X") || (newBoard[0] === "X" && newBoard[4] === "X" && newBoard[8] === "X")|| (newBoard[2] === "X" && newBoard[4] === "X" && newBoard[6] === "X")) {
-        return true
-      } else if ((newBoard[0] === "O" && newBoard[1] === "O" && newBoard[2] === "O") || (newBoard[3] === "O" && newBoard[4] === "O" && newBoard[5] === "O") || (newBoard[6] === "O" && newBoard[7] === "O" && newBoard[8] === "O") || (newBoard[0] === "O" && newBoard[3] === "O" && newBoard[6] === "O") || (newBoard[1] === "O" && newBoard[4] === "O" && newBoard[7] === "O") || (newBoard[2] === "O" && newBoard[5] === "O" && newBoard[8] === "O") || (newBoard[0] === "O" && newBoard[4] === "O" && newBoard[8] === "O")|| (newBoard[2] === "O" && newBoard[4] === "O" && newBoard[6] === "O")) {
-        return false
-      }
-  };
-  let emptySpots = function(newBoard) {
-    avaliableSpotsCreate = []
-    for(i = 0; i < newBoard.length; i++) {
-      if (newBoard[i] !== "O" && newBoard[i] !== "X") {
-        IndexOfSpot = newBoard.indexOf(newBoard[i])
-        avaliableSpotsCreate.push(IndexOfSpot)
-      }
-    }
-    return avaliableSpotsCreate
-  }
-
- let origBoard = ["O", "1", "X", "X", "4", "X", "6", "O", "O"];
-//let origBoard = ["0","1" ,"2","3","4" ,"5", "6" ,"7","8"];
-let possibleResults = []
-let originalBoard = []
-function minimax(newBoard, player){
-  let avaliableSpots = emptySpots(newBoard);
-  console.log(newBoard)
-  console.log(avaliableSpots)
-  console.log(player === Robot)
-  if (checkWinnerAI(newBoard) === false){
-     return -10;
-  }
-	else if (checkWinnerAI(newBoard) === true){
-    return 10;
-	}
-  else if (avaliableSpots.length === 0){
-  	return 0;
-  }
-  for (i = 0; i < avaliableSpots.length; i++) {
-    let former = newBoard[avaliableSpots[i]]
-    newBoard[avaliableSpots[i]] = player
-    if(player === Robot) {
-      let scoreOfTest = minimax(newBoard, Human)
-      possibleResults.push(scoreOfTest)
-    } else if (player === Human) {
-      let scoreOfTest = minimax(newBoard, Robot)
-      possibleResults.push(scoreOfTest)
-    }
-    newBoard[Number(former)] = former
-  }
-  console.log(possibleResults)
-  console.log(newBoard)
-//   if(player == Robot){
-//     let bestScore = -1000;
-//     for(let i = 0; i < newMoveScore.length; i++){
-//       if(newMoveScore[i] > bestScore){
-//         bestScore = newMoveScore[i];
-//         bestMove = i;
-//       }
-//     }
-//   } else {
-//     let bestScore = 1000;
-//     for(let i = 0; i < newMoveScore.length; i++){
-//       if(newMoveScore[i] < bestScore){
-//         bestScore = newMoveScore[i];
-//         bestMove = i;
-//       }
-//     }
-//   }
-// // return the chosen move (object) from the array to the higher depth
-//   return bestMove;
-}
-var bestSpot = minimax(origBoard, Robot);
-//loging the results
-// console.log("index: " + bestSpot.index);
-
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
@@ -130,7 +52,7 @@ var bestSpot = minimax(origBoard, Robot);
           $("#" + this.id).attr("height", 150);
           $("#" + this.id).css({
             "padding":"0px",
-            "opacity":"0.6"
+            "opacity":"0.3"
           });
         } else if(currentPlayer === "O") {
           $("#" + this.id).attr("src", "Circle.png");
@@ -138,7 +60,7 @@ var bestSpot = minimax(origBoard, Robot);
           $("#" + this.id).attr("height", 150);
           $("#" + this.id).css({
             "padding":"0px",
-            "opacity":"0.6"
+            "opacity":"0.3"
           })
         }
       }
@@ -158,7 +80,7 @@ var bestSpot = minimax(origBoard, Robot);
     if($("#" + this.id).hasClass("used") === false) {
       if(currentPlayer === "X") {
         $("#" + this.id).addClass("used")
-        let Index = currentState.indexOf(""+this.id)
+        let Index = currentState.indexOf("" + this.id)
         currentState[Index] = "X";
         $("#" + this.id).attr("src", "LetterX.png");
         $("#" + this.id).attr("width", 150);
@@ -167,7 +89,6 @@ var bestSpot = minimax(origBoard, Robot);
           "padding":"0px",
           "opacity":"1"
         });
-        console.log(currentState)
         currentPlayer = "O";
       } else {
         let Index = currentState.indexOf("" + this.id)
@@ -180,7 +101,6 @@ var bestSpot = minimax(origBoard, Robot);
           "padding":"0px",
           "opacity":"1"
         })
-        console.log(currentState)
         currentPlayer = "X";
       };
       checkWinner();
