@@ -4,7 +4,7 @@ $(document).ready(function() {
   let Player2ScoreAmount = 0;
   let Robot = "X"
   let Human = "O"
-  let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  //let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
   //let Player1 = prompt("Enter Player 1 name team X", "Player1");
   //let Player2 = prompt("Enter Player 2 name team O", "Player2");
   $("#Player1").text(Player1);
@@ -47,71 +47,95 @@ $(document).ready(function() {
   };
 
   let checkWinnerMinimax = function(board, player) {
-    if (
-      (board[0] === player && board[1] === player && board[2] === player) ||
+    if ((board[0] === player && board[1] === player && board[2] === player) ||
       (board[3] === player && board[4] === player && board[5] === player) ||
       (board[6] === player && board[7] === player && board[8] === player) ||
       (board[0] === player && board[3] === player && board[6] === player) ||
       (board[1] === player && board[4] === player && board[7] === player) ||
       (board[2] === player && board[5] === player && board[8] === player) ||
       (board[0] === player && board[4] === player && board[8] === player) ||
-      (board[2] === player && board[4] === player && board[6] === player)
-    ) {
+      (board[2] === player && board[4] === player && board[6] === player)) {
       return true
-    } else if (board[0] !== "1" && board[1] !== "2" && board[2] !== "3" && board[3] !== "4" && board[4] !== "5" && board[5] !== "6" && board[6] !== "7" && board[7] !== "8" && board[8] !== "9") {
-      return "tie"
-    } else {
-      return false
     }
   }
-var origBoard = ["O","1" ,"X","X","4" ,"X", "6" ,"O","O"];
-let minimax = function(board, player) {
-  if (checkWinnerMinimax(board, player) === true) {
-    if (player === Robot) {
-      nextScore = 10
-      return nextScore
+  let checkTie = function(board) {
+    let spotsLeft = []
+    for (i = 0; i < board.length; i++) {
+      if (board[i] !== "X" && board[i] !== "O") {
+        spotsLeft.push(board[i])
+      }
+    }
+    if(spotsLeft.length === 0) {
+      return true
+    }
+  }
+  let currentState = ["O", "2", "X", "X", "5", "X", "7", "O", "O"];
+  let minimax = function(board, player) {
+    if (checkWinnerMinimax(board, player) === true) {
+      if (player === Robot) {
+        return 10
+      } else if (player === Human) {
+        return -10
+      }
+    } else if (checkTie(board) === true) {
+      return 10
+    }
+    if(player === Robot) {
+      let bestScore = -1000
+      console.log(board)
+      for(i = 0; i < board.length; i++) {
+        let origin = (i+1).toString();
+        if(board[i] !== "X" && board[i] !== "O") {
+          board[i] = Robot
+          let Score = minimax(board, Human)
+          board[i] = origin
+          if (Score > bestScore) {
+            bestScore = Score
+          }
+        }
+      }
+      return bestScore
     } else if (player === Human) {
-      nextScore = -10
-      return nextScore
-    }
-  } else if (checkWinnerMinimax(board, player) === "tie") {
-    nextScore = 0
-    return nextScore
-  }
-  if(player === Robot) {
-    let bestScore = -1000
-    for(i = 0; i < board.length; i++) {
-      if(board[i] !== "X" && board[i] !== "O") {
-        let origin = board[i]
-        board[i] = player
-        let nextScore = minimax(board, Human)
-        board[i] = origin
-        if (nextScore > bestScore) {
-          bestScore = nextScore
+      let bestScore = 1000
+      console.log(board)
+      for(i = 0; i < board.length; i++) {
+        let origin = (i+1).toString();
+        if(board[i] !== "X" && board[i] !== "O") {
+          board[i] = Human
+          let newScore = minimax(board, Human)
+          board[i] = origin
+          if (newScore < bestScore) {
+            bestScore = newScore
+          }
         }
       }
+      return bestScore
     }
-    return bestScore
-  } else if (player === Human) {
-    let bestScore = 1000
-    // let emptySpots = avaliableSpots(board)
-    for(i = 0; i < board.length; i++) {
-      if(board[i] !== "X" && board[i] !== "O") {
-        let origin = board[i]
-        board[i] = player
-        let nextScore = minimax(board, Robot)
-        board[i] = origin
-        if (nextScore < bestScore) {
-          bestScore = nextScore
-        }
-      }
-    }
-    console.log(board)
-    return bestScore
   }
-}
-var bestSpot = minimax(origBoard, "X");
-console.log(bestSpot)
+  // function bestMove() {
+  //   let bestScore = -1000;
+  //   let move = undefined;
+  //   console.log( currentState );
+  //   for (let i = 0; i < currentState.length; i++) {
+  //     let origin = (i+1).toString();
+  //     if (currentState[i] !== Robot && currentState[i] !== Human) {
+  //       currentState[i] = Robot;
+  //       console.log(currentState)
+  //       let score = minimax(currentState, Human);
+  //       currentState[i] = origin
+  //       if (score > bestScore) {
+  //         bestScore = score;
+  //         move = (i+1)
+  //       }
+  //     }
+  //   }
+  //   currentPlayer = Human;
+  //   console.log('chosen:', move)
+  // }
+
+
+  console.log(minimax(currentState,Robot));
+  console.log(currentState);
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
