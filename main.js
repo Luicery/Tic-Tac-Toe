@@ -2,140 +2,82 @@ $(document).ready(function() {
   let currentPlayer = "X";
   let Player1ScoreAmount = 0;
   let Player2ScoreAmount = 0;
-  let Robot = "X"
-  let Human = "O"
-  //let currentState = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  let Player1 = prompt("Enter Player 1 name team X", "Player1");
-  let Player2 = prompt("Enter Player 2 name team O", "Player2");
-  $("#Player1").text(Player1);
-  $("#Player2").text(Player2);
-  $("#Turn").text(`It is ${Player1}'s turn'`)
+  let currentState = ["", "", "","", "", "","", "", ""];
   let boardClear = function() {
-    for (i = 1; i <= 9; i++) {
-      $("#"+i).attr("src","");
+    for(i = 1; i <= 9; i++) {
+      $("#"+i).attr("src", "white.jpg");
       $("#"+i).attr("width", 0);
       $("#"+i).attr("height", 0);
       $("#"+i).removeClass("used")
-      $("#"+i).css({
-        "padding":"75px"
-      });
     };
+    currentState = ["", "", "","", "", "","", "", ""];
     currentPlayer= "X";
   };
-  let changeTurns = function() {
-    if(currentPlayer === "X") {
-      $("#Turn").text(`It is ${Player1}'s turn`);
-    } else {
-      $("#Turn").text(`It is ${Player2}'s turn`);
-    };
-  };
   let checkWinner = function() {
-    if(($("#1").attr("src") === "LetterX.png" && $("#2").attr("src") === "LetterX.png" && $("#3").attr("src") === "LetterX.png") || ($("#4").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png") || ($("#7").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#4").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png") || ($("#2").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#8").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#6").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#1").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#9").attr("src") === "LetterX.png") || ($("#3").attr("src") === "LetterX.png" && $("#5").attr("src") === "LetterX.png" && $("#7").attr("src") === "LetterX.png")) {
-      console.log("Player 1 wins");
+    if(currentState[0] === "X" && currentState[1] === "X" && currentState[2] === "X" || currentState[3] === "X" && currentState[4] === "X" && currentState[5] === "X" || currentState[6] === "X" && currentState[7] === "X" && currentState[8] === "X" || currentState[0] === "X" && currentState[4] === "X" && currentState[8] === "X" || currentState[2] === "X" && currentState[4] === "X" && currentState[6] === "X" || currentState[0] === "X" && currentState[3] === "X" && currentState[6] === "X" || currentState[1] === "X" && currentState[4] === "X" && currentState[7] === "X" || currentState[2] === "X" && currentState[5] === "X" && currentState[8] === "X") {
       Player1ScoreAmount = Player1ScoreAmount + 1;
       $("#Player1Score").text(Player1ScoreAmount);
+      $("#result").text(`You Win`)
       boardClear();
-    } else if(($("#1").attr("src") === "Circle.png" && $("#2").attr("src") === "Circle.png" && $("#3").attr("src") === "Circle.png") || ($("#4").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png") || ($("#7").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#4").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png") || ($("#2").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#8").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#6").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#1").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#9").attr("src") === "Circle.png") || ($("#3").attr("src") === "Circle.png" && $("#5").attr("src") === "Circle.png" && $("#7").attr("src") === "Circle.png")) {
-      console.log("Player 2 wins");
+    } else if(currentState[0] === "O" && currentState[1] === "O" && currentState[2] === "O" || currentState[3] === "O" && currentState[4] === "O" && currentState[5] === "O" || currentState[6] === "O" && currentState[7] === "O" && currentState[8] === "O" || currentState[0] === "O" && currentState[4] === "O" && currentState[8] === "O" || currentState[2] === "O" && currentState[4] === "O" && currentState[6] === "O" || currentState[0] === "O" && currentState[3] === "O" && currentState[6] === "O" || currentState[1] === "O" && currentState[4] === "O" && currentState[7] === "O" || currentState[2] === "O" && currentState[5] === "O" && currentState[8] === "O") {
       Player2ScoreAmount = Player2ScoreAmount + 1;
       $("#Player2Score").text(Player2ScoreAmount);
+      $("#result").text(`AI Minimax Wins`)
       boardClear();
-    } else if ($("#1").attr("src") !== "" && $("#2").attr("src") !== "" && $("#3").attr("src") !== "" && $("#4").attr("src") !== "" && $("#5").attr("src") !== "" && $("#6").attr("src") !== "" && $("#7").attr("src") !== "" && $("#8").attr("src") !== "" && $("#9").attr("src") !== "") {
-      console.log("Draw");
+    } else if(currentState[0] !== "" && currentState[1] !== "" && currentState[2] !== "" && currentState[3] !== "" && currentState[4] !== "" && currentState[5] !== "" && currentState[6] !== "" && currentState[7] !== "" && currentState[8] !== "") {
+      $("#result").text(`Draw`)
       boardClear();
     };
   };
-
-  let checkWinnerMinimax = function(board, player) {
-    if ((board[0] === player && board[1] === player && board[2] === player) ||
-      (board[3] === player && board[4] === player && board[5] === player) ||
-      (board[6] === player && board[7] === player && board[8] === player) ||
-      (board[0] === player && board[3] === player && board[6] === player) ||
-      (board[1] === player && board[4] === player && board[7] === player) ||
-      (board[2] === player && board[5] === player && board[8] === player) ||
-      (board[0] === player && board[4] === player && board[8] === player) ||
-      (board[2] === player && board[4] === player && board[6] === player)) {
-      return true
+  let checkWinnerMinimax = function(currentState) {
+    if(currentState[0] === "X" && currentState[1] === "X" && currentState[2] === "X" || currentState[3] === "X" && currentState[4] === "X" && currentState[5] === "X" || currentState[6] === "X" && currentState[7] === "X" && currentState[8] === "X" || currentState[0] === "X" && currentState[4] === "X" && currentState[8] === "X" || currentState[2] === "X" && currentState[4] === "X" && currentState[6] === "X" || currentState[0] === "X" && currentState[3] === "X" && currentState[6] === "X" ||      currentState[1] === "X" && currentState[4] === "X" && currentState[7] === "X" || currentState[2] === "X" && currentState[5] === "X" && currentState[8] === "X") {
+        return "lose"
+    } else if(currentState[0] === "O" && currentState[1] === "O" && currentState[2] === "O" || currentState[3] === "O" && currentState[4] === "O" && currentState[5] === "O" || currentState[6] === "O" && currentState[7] === "O" && currentState[8] === "O" || currentState[0] === "O" && currentState[4] === "O" && currentState[8] === "O" || currentState[2] === "O" && currentState[4] === "O" && currentState[6] === "O" || currentState[0] === "O" && currentState[3] === "O" && currentState[6] === "O" || currentState[1] === "O" && currentState[4] === "O" && currentState[7] === "O" || currentState[2] === "O" && currentState[5] === "O" && currentState[8] === "O") {
+        return "win"
+    } else if(currentState[0] !== "" && currentState[1] !== "" && currentState[2] !== "" && currentState[3] !== "" && currentState[4] !== "" && currentState[5] !== "" && currentState[6] !== "" && currentState[7] !== "" && currentState[8] !== "") {
+        return "draw"
     }
   }
-  let checkTie = function(board) {
-    let spotsLeft = []
-    for (i = 0; i < board.length; i++) {
-      if (board[i] !== "X" && board[i] !== "O") {
-        spotsLeft.push(board[i])
-      }
+  let move = "";
+  let minimax = function(board, player, depth) {
+    let winnerResult = checkWinnerMinimax(board)
+    if(winnerResult === "win") {
+      return 100 - depth
+    } else if(winnerResult === "lose") {
+      return -100 - depth
+    } else if(winnerResult === "draw") {
+      return 0 - depth
     }
-    if(spotsLeft.length === 0) {
-      return true
-    }
-  }
-  let currentState = ["O", "2", "X", "X", "5", "X", "7", "O", "O"];
-  let minimax = function(board, player) {
-    if (checkWinnerMinimax(board, player) === true) {
-      if (player === Robot) {
-        return 10
-      } else if (player === Human) {
-        return -10
-      }
-    } else if (checkTie(board) === true) {
-      return 10
-    }
-    if(player === Robot) {
-      let bestScore = -1000
-      console.log(board)
-      for(i = 0; i < board.length; i++) {
-        let origin = (i+1).toString();
-        if(board[i] !== "X" && board[i] !== "O") {
-          board[i] = Robot
-          let Score = minimax(board, Human)
-          board[i] = origin
-          if (Score > bestScore) {
-            bestScore = Score
+    if(player === "X") {
+      minimum = [10000, undefined]
+      board.forEach((value,index) => {
+        if(board[index] === "") {
+          board[index] = "X"
+          let newScore = minimax(board, "O", depth+1)
+          board[index] = ""
+          if(newScore[0] < minimum[0]) {
+            minimum[1] = index+1
+            minimum[0] = newScore[0]
           }
         }
-      }
-      return bestScore
-    } else if (player === Human) {
-      let bestScore = 1000
-      console.log(board)
-      for(i = 0; i < board.length; i++) {
-        let origin = (i+1).toString();
-        if(board[i] !== "X" && board[i] !== "O") {
-          board[i] = Human
-          let newScore = minimax(board, Human)
-          board[i] = origin
-          if (newScore < bestScore) {
-            bestScore = newScore
+      })
+      return minimum
+    } else {
+      maximise = [-10000, undefined]
+      board.forEach((value,index) => {
+        if(board[index] === "") {
+          board[index] = "O"
+          let newScore = minimax(board, "X", depth+1)
+          board[index] = ""
+          if (newScore[0] > maximise[0]) {
+            maximise[1] = index+1
+            maximise[0] = newScore[0]
           }
         }
-      }
-      return bestScore
+      })
+      return maximise
     }
   }
-  // function bestMove() {
-  //   let bestScore = -1000;
-  //   let move = undefined;
-  //   console.log( currentState );
-  //   for (let i = 0; i < currentState.length; i++) {
-  //     let origin = (i+1).toString();
-  //     if (currentState[i] !== Robot && currentState[i] !== Human) {
-  //       currentState[i] = Robot;
-  //       console.log(currentState)
-  //       let score = minimax(currentState, Human);
-  //       currentState[i] = origin
-  //       if (score > bestScore) {
-  //         bestScore = score;
-  //         move = (i+1)
-  //       }
-  //     }
-  //   }
-  //   currentPlayer = Human;
-  //   console.log('chosen:', move)
-  // }
-
-
-  console.log(minimax(currentState,Robot));
-  console.log(currentState);
   $(".square").on({
     mouseenter: function() {
       if($("#" + this.id).hasClass("used") === false) {
@@ -160,12 +102,9 @@ $(document).ready(function() {
     },
     mouseleave: function() {
       if($("#" + this.id).hasClass("used") === false) {
-        $("#"+ this.id).attr("src","");
+        $("#"+ this.id).attr("src","white.jpg");
         $("#"+ this.id).attr("width", 0);
         $("#"+ this.id).attr("height", 0);
-        $("#"+ this.id).css({
-          "padding":"75px",
-        });
       }
     }
   })
@@ -173,8 +112,7 @@ $(document).ready(function() {
     if($("#" + this.id).hasClass("used") === false) {
       if(currentPlayer === "X") {
         $("#" + this.id).addClass("used")
-        let Index = currentState.indexOf("" + this.id)
-        currentState[Index] = "X";
+        currentState[parseInt(this.id) - 1] = "X";
         $("#" + this.id).attr("src", "LetterX.png");
         $("#" + this.id).attr("width", 150);
         $("#" + this.id).attr("height", 150);
@@ -182,10 +120,11 @@ $(document).ready(function() {
           "padding":"0px",
           "opacity":"1"
         });
+        let doMove = (minimax(currentState, "O", 0)[1])
         currentPlayer = "O";
+        $("#"+doMove).click()
       } else {
-        let Index = currentState.indexOf("" + this.id)
-        currentState[Index] = "O";
+        currentState[parseInt(this.id) - 1] = "O";
         $("#" + this.id).addClass("used")
         $("#" + this.id).attr("src", "Circle.png");
         $("#" + this.id).attr("width", 150);
@@ -197,7 +136,6 @@ $(document).ready(function() {
         currentPlayer = "X";
       };
       checkWinner();
-      changeTurns();
     };
   });
 });

@@ -5,53 +5,36 @@
 nav {
   background-color: lightblue;
   color: white;
-  text-align: center;
-  padding: 0px;
+  text-align:center;
   font-size: 50px;
   font-family:"Lilita One", sans-serif;
 }
-#Player1 {
-  position: absolute;
-  left: 15%;
-  top: 25%;
+#Player1Score, #Player2Score {
 }
-#Player2 {
-  position: absolute;
-  right: 15%;
-  top: 25%;
-}
-.Players {
+.Player1Display, .Player2Display {
+  vertical-align: middle;
   font-size: 30px;
   font-family:"Lilita One", sans-serif;
   color:red;
 }
-#Player1Score {
-  position: absolute;
-  left: 17.5%;
-  top: 32.5%;
-}
-#Player2Score {
-  position: absolute;
-  right: 17.5%;
-  top: 32.5%;
-}
 #board {
-  position: absolute;
-  left:32.5%;
-  top: 20%;
-  border-spacing: 0;
+  margin:0 auto;
+  margin-top:4em;
 }
 td {
   margin: 0;
   border: 3px solid black;
 }
-.square {
-  padding:75px;
+.square, .used {
+  height:130px;
+  width:130px;
 }
-.used {
-  padding:75px;
+#TicTitle {
+  padding-left: 80px;
+  padding-right: 80px;
 }
-#Turn {
-  text-align: center;
-  padding: 20px;
+#result, #Turn {
+  text-align:center;
+  font-size: 1.5em;
+  color: red;
 }

@@ -8,27 +8,32 @@
   <script src="main.js"> </script>
   <link rel="stylesheet" href="style.css">
   <title>Tic Tac Toe</title>
-  <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Lilita+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
-  <nav>Tic Tac Toe</nav>
-  <div class="Players"> <span id="Player1">Player 1</span> <span id="Player2">Player 2</span> </div>
-  <div class="Players"> <span id="Player1Score">0</span> <span id="Player2Score">0</span> </div>
-  <div class="Players" id="Turn"> It is Player 1's turn </div>
-  <table id="board">
+  <nav>
+    <span id="Player1" class="Player1Display">You</span><span id="Player1Score" class="Player1Display"> 0 </span>
+    <span id="TicTitle">Tic Tac Toe</span>
+    <span id="Player2Score" class="Player2Display"> 0 </span><span id="Player2" class="Player2Display">AI Minimax</span>
+  </nav>
+  <div id="board">
+  <table>
     <tr>
-    <td><img class="square" id="1"src=""></img></td>
-    <td><img class="square" id="2"src=""></img></td>
-    <td><img class="square" id="3"src=""></img></td>
+    <td><img class="square" id="1" src="white.jpg"></img></td>
+    <td><img class="square" id="2" src="white.jpg"></img></td>
+    <td><img class="square" id="3" src="white.jpg"></img></td>
     </tr><tr>
-    <td><img class="square" id="4"src=""></img></td>
-    <td><img class="square" id="5"src=""></img></td>
-    <td><img class="square" id="6"src=""></img></td>
+    <td><img class="square" id="4" src="white.jpg"></img></td>
+    <td><img class="square" id="5" src="white.jpg"></img></td>
+    <td><img class="square" id="6" src="white.jpg"></img></td>
     </tr><tr>
-    <td><img class="square" id="7"src=""></img></td>
-    <td><img class="square" id="8"src=""></img></td>
-    <td><img class="square" id="9"src=""></img></td>
+    <td><img class="square" id="7" src="white.jpg"></img></td>
+    <td><img class="square" id="8" src="white.jpg"></img></td>
+    <td><img class="square" id="9" src="white.jpg"></img></td>
     </tr>
   </table>
+  </div>
+  <br>
+  <div id="result"></div>
 </body>
 </html>
