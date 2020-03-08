@@ -66,24 +66,21 @@ $(document).ready(function() {
     }
   }
   let startMinMax = function() {
-    let allResults = []
     let bestScore = -Infinity;
     let move;
     currentState.forEach((value, index) => {
       if(value === "") {
-        currentState[index] = "O"
+        currentState[index] = "X"
         let newScore = minimax(currentState, "Human", 0)
-        console.log(currentState);
         currentState[index] = ""
         allResults.push(newScore)
         if(newScore > bestScore) {
           move = index + 1
+          allMoves.push(index+1)
           bestScore = newScore
         }
       }
     })
-    console.log(allResults);
-    console.log(bestScore);
     $("#"+move).click()
   }
   $(".square").on({
