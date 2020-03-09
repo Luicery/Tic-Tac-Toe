@@ -44,9 +44,7 @@ $(document).ready(function() {
           board[index] = "X"
           let newScore = minimax(board, "Robot", depth + 1)
           board[index] = ""
-          if(newScore < minimum) {
-            minimum = newScore
-          }
+          minimum = Math.min(newScore, minimum)
         }
       })
       return minimum
@@ -57,9 +55,7 @@ $(document).ready(function() {
           board[index] = "O"
           let newScore = minimax(board, "Human", depth+1)
           board[index] = ""
-          if(newScore > maximise) {
-            maximise = newScore
-          }
+          maximise = Math.max(newScore, maximise)
         }
       })
       return maximise
@@ -70,14 +66,17 @@ $(document).ready(function() {
     let move;
     currentState.forEach((value, index) => {
       if(value === "") {
-        currentState[index] = "X"
-        let newScore = minimax(currentState, "Human", 0)
-        currentState[index] = ""
-        allResults.push(newScore)
-        if(newScore > bestScore) {
-          move = index + 1
-          allMoves.push(index+1)
-          bestScore = newScore
+        if(currentState[4] === "") {
+          move = 5
+        } else {      
+          currentState[index] = "X"
+          let newScore = minimax(currentState, "Human", 0)
+          currentState[index] = ""
+          console.log(newScore);
+          if(newScore > bestScore) {
+            move = index + 1
+            bestScore = newScore
+          }
         }
       }
     })
